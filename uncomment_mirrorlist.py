@@ -102,5 +102,4 @@ if __name__ == "__main__":
         print("---------")
         traceback.print_tb(tbobj)
 else:
-    print("Unexpected call mode. Press any key to exit...")
-    wait_key()
+    print("unexpected call mode")
