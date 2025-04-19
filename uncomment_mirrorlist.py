@@ -1,16 +1,14 @@
-
 import sys
-import traceback
 
 
 def print_lines(lines):
     for line in lines:
         print(line, end='')
 
-
 def copy_header_lines(lines, result_lines):
-    #if len(lines) < 1:
-    #    return -1
+    if len(lines) < 1:
+        return
+
     if lines[0].startswith("Server"):
         return
 
@@ -24,7 +22,6 @@ def copy_header_lines(lines, result_lines):
     if len(result_lines) > 0:
         result_lines.append("\n")
 
-
 def copy_country_servers(lines, countries, result_lines):
     for country in countries:
         country_lwr = country.lower()
@@ -32,7 +29,6 @@ def copy_country_servers(lines, countries, result_lines):
         index = 0
         while index < len(lines):
             line = lines[index]
-            #index += 1
             if line.startswith("##") and len(line) > 2:
                 if line.lower().find(country_lwr, 2) > 0:
                     country_ok = True
@@ -48,7 +44,6 @@ def copy_country_servers(lines, countries, result_lines):
 
             index += 1
 
-
 def make_sorted_lines(lines, countries):
     result_lines = []
     copy_header_lines(lines, result_lines)
@@ -56,16 +51,13 @@ def make_sorted_lines(lines, countries):
     result_lines.extend(lines)
     return result_lines
 
-
 def uncomment_servers(lines):
     for index, item in enumerate(lines):
         if item.startswith("#Server"):
             lines[index] = item.replace("#Server", "Server", 1)
 
-
 def usage():
     print(f"{sys.argv[0]} <mirrorlist_file> [country 1] [country 2] ... [country N]");
-
 
 def main():
     argv = sys.argv[1:]
@@ -88,18 +80,7 @@ def main():
 
     print_lines(lines)
 
-
 if __name__ == "__main__":
-    try:
-        main()
-    except:
-        type, value, tbobj = sys.exc_info()
-        print("---------")
-        print("EXCEPTION")
-        print("---------")
-        print("type:", type)
-        print("value:", value)
-        print("---------")
-        traceback.print_tb(tbobj)
+    main()
 else:
     print("unexpected call mode")
