@@ -29,6 +29,10 @@ def copy_country_servers(lines, countries, result_lines):
         index = 0
         while index < len(lines):
             line = lines[index]
+            if line == "\n":
+                del lines[index]
+                continue
+
             if line.startswith("##") and len(line) > 2:
                 if line.lower().find(country_lwr, 2) > 0:
                     country_ok = True
@@ -49,6 +53,7 @@ def make_sorted_lines(lines, countries):
     copy_header_lines(lines, result_lines)
     copy_country_servers(lines, countries, result_lines)
     result_lines.extend(lines)
+    result_lines.extend(["\n"])
     return result_lines
 
 def uncomment_servers(lines):
@@ -57,7 +62,7 @@ def uncomment_servers(lines):
             lines[index] = item.replace("#Server", "Server", 1)
 
 def usage():
-    print(f"{sys.argv[0]} <mirrorlist_file> [country 1] [country 2] ... [country N]");
+    print(f"{sys.argv[0]} <mirrorlist_file> [country 1] [country 2] ... [country N]")
 
 def main():
     argv = sys.argv[1:]
